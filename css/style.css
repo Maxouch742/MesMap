@@ -1,0 +1,178 @@
+.ol-attribution {
+  bottom: 0;
+  height: 1em;
+}
+.ol-scale-line {
+  right: 0;
+  left: auto;
+  bottom: 2em;
+}
+.ol-control-title {
+  height: 2em;
+}
+
+.ol-ext-print-dialog label {
+  letter-spacing: -.05em;
+} */
+
+.param {
+    max-height: 100%;
+    overflow: auto;
+}
+
+#map {
+    height: 100vh;
+    border-width: 1px;
+  }
+
+/* ------   ZOOM   -------- */
+/* Se trouve deja dans ol.css */
+/* .ol-zoom {
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+    width: 90px;
+} */
+
+
+/* ------   AFFICAHGE COORD   -------- */
+.ol-mouse-position {
+  position: absolute; 
+  top: 96vh;
+  left: 1vh;
+}
+
+
+/* ------   AFFICAHGE COUCHEE   -------- */
+.PositionLayerChange {
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+    width: 90px;
+}
+
+/* ------   Outil fond cart / export / ...  -------- */
+.PositionMapChange {
+  position: absolute;
+  top: 1vh;
+  right: 5vw;
+  width: 90px;
+}
+
+.PositionMovePt {
+  position: absolute;
+  top: 1vh;
+  right: 9vw;
+  width: 90px;
+}
+
+.PositionExport {
+  position: absolute;
+  top: 1vh;
+  right: 13vw;
+  width: 90px;
+}
+
+
+.greyBackground {
+  background-color:rgb(236, 236, 236);
+}
+
+.td_IDSta{
+  width: 10vh;
+  text-align: left;
+  position : fixed
+} 
+
+
+/* Limiter taille du nombre */
+#number {
+  width: 8em;
+}
+
+
+
+/* ------   SCROLLBAR   -------- */
+.scroller {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  /* scrollbar-width: thin; */
+  margin-top: 2px;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 10vh; /*200px */
+  width: 210%;
+  overflow: auto;
+  }
+
+.my-custom-scrollbar-obs {
+    position: relative;
+    height: 10vh; /*200px */
+    width: 200%;
+    overflow: auto;
+    }
+
+.my-custom-scrollbar-nivellement {
+    position: relative;
+    height: 10vh; /*200px */
+    width: 100%;
+    overflow: auto;
+    }
+
+.my-custom-scrollbar-gnss {
+      position: relative;
+      height: 10vh; /*200px */
+      width: 350%;
+      overflow: auto;
+      }
+
+
+.table-wrapper-scroll-y {
+  display: block;
+  }
+
+/* ------   Num Station / Session   -------- */
+.row_ligne {
+    width :15vh; /*20vh */
+  }
+
+
+/* ------   Checkbox activate / map    -------- */
+.row_ligne1 {
+  width :25vh; 
+  text-align :end
+  }
+
+.row_ligne2 {
+  width :9vh; 
+  text-align : end;
+  }
+
+.row_ligne3{
+  width :40vh; 
+  }
+  
+
+/* ------   Ajout point value   -------- */
+.champ_input {
+  height : 3vh;
+  width : 10vh;
+}
+
+
+.select{
+  width : 10vh
+}
+
+.creditHEIG {
+  position:absolute;
+  bottom: 1vh;
+  left: 1vh;
+  background-color: white;
+}
+
+
+    
