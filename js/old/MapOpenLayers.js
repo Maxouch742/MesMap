@@ -49,7 +49,7 @@ const swissimage = new ol.layer.Tile({
 });
 
 // Ajout de la Map
-const map = new ol.Map({
+map = new ol.Map({
     target: "map",
     layers: [carteNationale],
     // overlays: [popup],

@@ -1,32 +1,38 @@
-// Création de l'objet qui contiendra tous les points
-points_global = {
-        'type':'FeatureCollection',
-        'crs':{
-            'type':'name',
-            'properties':{
-                'name':'EPSG:2056'
-            }
-        },
-        'features':[],
-        'id':'Object',
-    };
+/** Import du fichier de point (extension .KOO) selon format LTOP
+ * 
+ * 
+ */
 
-//--------------- IMPORTER UN FICHIER KOO (APPEL LORSQUE CLIQUE SUR LE BOUTON)  ----------------- 
 document.getElementById('importFileSelect_KOO').onchange = function(){
-     /** Import en format KOO selon format LTOP
-      * 
-      */
 
-    let points = points_global;
+    /*TODO: 
+    -------
+    vérifier si le dico est vide. 
+    S'il n'est pas vide:
+    --> on le vide et on remplace ?
+    --> on ajoute au dico déjà rempli ?
+    */ 
+
+   
     // Lecture du fichier
     const file = this.files[0];
     const reader = new FileReader();
     reader.onload = function(progressEvent){    
+       
+        // Contenu du fichier ASCII
         const fileContentArray = this.result.split(/\r\n|\n/);
+
+        // Parcours des lignes du fichier ASCII
         for(let i = 0; i < fileContentArray.length-1; i++){
+
+            // On récupère la ligne en cours
             let line = fileContentArray[i];
 
-            if (line.slice(0,4) != "$$PK" && line.slice(0,4) != "$$PE" && line.slice(0,2) != "**" ){  // PK : Coordonnées planes, altitudes sur le géoïde
+            /* Si la ligne ne commence par une suite de caractère précis, on parse la ligne du point
+               PK: coordonnées planes, altitudes sur le géoïde
+               PE: coordonnées planes, altitudes sur l'ellipsoïde
+            */
+            if (line.slice(0,4) != "$$PK" && line.slice(0,4) != "$$PE" && line.slice(0,1) != ";" ){
 
                 // Nom du point et controle
                 const punkt = line.slice(0, 10).trim();
@@ -146,46 +152,13 @@ document.getElementById('importFileSelect_KOO').onchange = function(){
                             'commentaire':comm
                         }
                     }
-                    points["features"].push(point_temp);
+                    points_global["features"].push(point_temp);
                 };
             };
         };
-        affichagePoints(points);
-        zoomPoints(points);
-        points_global = points;
-
+        displayPoints();
     };
+
+    // Lecture du fichier
     reader.readAsText(file);
-};
-
-function zoomPoints(dataPoints) {
-    /** Permet de déterminer les extrémités et ajuster la map aux coordonnées importés
-     * Zoom sur les points du fichier importé
-     * 
-     * @param {object} dataPoints L'objet qui contient toutes les coordonnées des points
-     * @returns nothing
-     * 
-     */
-    
-    // Liste des coordonnées sur X et Y
-    let yPoint = [];
-    let xPoint = [];
-    
-    // Parcours de l'objet pour ajouter les coordonnées dans les listes
-    for (const [key, value] of Object.entries(dataPoints['features'])) {
-        yPoint.push(value['geometry']['coordinates'][0]);
-        xPoint.push(value['geometry']['coordinates'][1]);
-    }
-    
-    // Détermination des min et max des listes
-    const left = Math.min(...yPoint);
-    const right = Math.max(...yPoint);
-    const top = Math.min(...xPoint);
-    const bottom = Math.max(...xPoint);
-
-    // Paramétrisation de la map
-    extentProject = ol.extent.boundingExtent([[left, bottom],[right, top]]);
-    bufferProject = ol.extent.buffer(extentProject,25);
-    map.getView().fit(bufferProject);
     };
-

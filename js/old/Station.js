@@ -99,7 +99,6 @@ function activateStation(){
 
         // }
     else {
-        console.log('vv')
         afficheTblObs(dico_mes, valeur, methode)
         }
     console.log('tbl afficher');

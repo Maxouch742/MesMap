@@ -48,37 +48,20 @@
             <input id='importFileSelect_MES' type='file' name='importFileSelect_MES'  accept=".MES, .mes"> 
           </div>  
         </div>
-
-        <pre id="output"></pre>
-        <div class ="mt-2 greyBackground border border-dark p-1">
-          <h5 class="mx-1 mt-0"> Ajout Points</h6>
-          <div class="row">
-            <div class="col-sm-4">
-              <button id="addPt" type="button" onclick="addPoint()">+</button>
-            </div>
-            <div class="col-sm-4">
-              <input id='numPt' class="form-control mx-1 champ_input" type="text" value="9001" onchange="noPoint(this)">
-            </div>
-            <div class="col-sm-1">
-              <button id="validatePt" type="button" disabled="disabled" onclick="validatePoint()">&#10004;</button>
-            </div>
-            <div class="col-sm-3">
-              <button id="deletePt" type="button" disabled="disabled"  onclick="deletePoint()">Delete</button> 
-            </div>
-          </div>
-        </div>
-          
+  
         <!-- https://bootstrap-top-design.com/menu-a-onglet-avec-bootstrap/ -->
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="#terrestre" data-toggle="tab"  onclick="recupIDLien(this.href), changementMethode()">Terrestre</a>
+            <a class="nav-link active" href="#gnss" data-toggle="tab" onclick="recupIDLien(this.href), changementMethode()">GNSS</a>
           </li>
+          <!--
           <li class="nav-item">
-            <a class="nav-link " href="#gnss" data-toggle="tab" onclick="recupIDLien(this.href), changementMethode()">GNSS</a>
+            <a class="nav-link" href="#terrestre" data-toggle="tab"  onclick="recupIDLien(this.href), changementMethode()">Terrestre</a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="#nivellement" data-toggle="tab" onclick="recupIDLien(this.href), changementMethode()">Nivellement</a>
           </li>
+        -->
         </ul>
         
         <div class="tab-content">
@@ -394,14 +377,22 @@
   <script src="./js/old/Station.js"></script>
   <script src="./js/old/Observation.js"></script>
 
-  <script src="./js/old/Import_KOO.js"></script>
+  <!--<script src="./js/old/Import_KOO.js"></script>-->
   <script src="./js/old/Import_MES.js"></script>
 
   <script src="./js/old/Export_KOO.js"></script>
   <script src="./js/old/Export_MES.js"></script>
 
-  <script src="../js/old/Action_general.js"></script>
+  <script src="./js/old/Action_general.js"></script>
   <script src="./js/old/layerStation.js"></script>
+
+  <!-- MFX -->
+  <script src="./js/color_constants.js"></script>
+
+  <script src="./js/KOO/KOO_constants.js"></script>
+  <script src="./js/KOO/KOO_import.js"></script>
+
+  <script src="./js/display/displayPoints.js"></script>
   
 </body>
 

@@ -1,7 +1,6 @@
 //--------------- Style geometrie points -----------------
 
 const style_points = function (feature) {
-    console.log('v')
     /** Style point valider pour point ajouter manuellement par utilsiateur 
      *  
      * @param {object} feature    feature 
