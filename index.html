@@ -1,393 +1,408 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <title>MesMap</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- OpenLayers -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
-    
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
-    <!-- w3school -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<head>
+  <title>MesMap</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Personnel -->
-    <link rel="stylesheet" href="./css/style.css" type="text/css">
-  </head>
+  
+  <!-- OpenLayer -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.1.0/ol.css">
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  
+  <!-- w3school -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-  <body>
+  <!-- Personnel -->
+  <link rel="stylesheet" href="./css/style.css" type="text/css">
 
-    <div class="container-fluid">
-      <div class="row">
-        <!-- Partie gauche - MENU & PARAMETRES -->
-        <div class="col-3" id="param">
+  <!-- ol-ext Utiliser pour PDF -->
+  <link rel="stylesheet" href="./css/ol-ext.css" />
+  <link rel="stylesheet" href="./css/ol-ext.min.css" />
+  
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Partie gauche - MENU & PARAMETRES -->
+      <div class="col-3" id="param">
+      
+        <h1>MesMap</h1>
         
-          <h1>MesMap</h1>
-          
-          <!-- import fichier point -->
-          <!-- https://www.delftstack.com/fr/howto/javascript/open-local-text-file-using-javascript/ -->
-          <h6>Importer fichier .KOO et .MES</h4>
-          <div class="row">
-            <div class="col-2">
-              <p>KOO</p>
-              <p>MES</p>
-            </div>  
-            <div class="col-8">
-              <input id='importFileSelect_KOO' type='file' name='importFileSelect_KOO'  accept=".KOO, .koo" >
-              <input id='importFileSelect_MES' type='file' name='importFileSelect_MES'  accept=".MES, .mes"> 
-            </div>  
-          </div>
-          <!-- /. fin row import files -->
+        <!-- import fichier point -->
+        <!-- https://www.delftstack.com/fr/howto/javascript/open-local-text-file-using-javascript/ -->
+        <h6>Importer fichier .KOO et .MES</h4>
+        <div class="row">
+          <div class="col-2">
+          <p>KOO</p>
+          <p>MES</p>
+          </div>  
+          <div class="col-8">
+            <input id='importFileSelect_KOO' type='file' name='importFileSelect_KOO'  accept=".KOO, .koo" >
+            <input id='importFileSelect_MES' type='file' name='importFileSelect_MES'  accept=".MES, .mes"> 
+          </div>  
+        </div>
 
-          <pre id="output"></pre>
-          <div class ="mt-2 greyBackground border border-dark p-1">
-            <h5 class="mx-1 mt-0"> Ajout Points</h6>
-            <div class="row">
-              <div class="col-sm-4">
-                <button id="addPt" type="button" onclick="addPoint()">+</button>
-              </div>
-              <div class="col-sm-4">
-                <input id='numPt' class="form-control mx-1 champ_input" type="text" value="9001" onchange="noPoint(this)">
-              </div>
-              <div class="col-sm-1">
-                <button id="validatePt" type="button" disabled="disabled" onclick="validatePoint()">&#10004;</button>
-              </div>
-              <div class="col-sm-3">
-                <button id="deletePt" type="button" disabled="disabled"  onclick="deletePoint()">Delete</button> 
-              </div>
+        <pre id="output"></pre>
+        <div class ="mt-2 greyBackground border border-dark p-1">
+          <h5 class="mx-1 mt-0"> Ajout Points</h6>
+          <div class="row">
+            <div class="col-sm-4">
+              <button id="addPt" type="button" onclick="addPoint()">+</button>
+            </div>
+            <div class="col-sm-4">
+              <input id='numPt' class="form-control mx-1 champ_input" type="text" value="9001" onchange="noPoint(this)">
+            </div>
+            <div class="col-sm-1">
+              <button id="validatePt" type="button" disabled="disabled" onclick="validatePoint()">&#10004;</button>
+            </div>
+            <div class="col-sm-3">
+              <button id="deletePt" type="button" disabled="disabled"  onclick="deletePoint()">Delete</button> 
             </div>
           </div>
-            
-          <!-- https://bootstrap-top-design.com/menu-a-onglet-avec-bootstrap/ -->
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link active" href="#terrestre" data-toggle="tab"  onclick="recupIDLien(this.href), changementMethode()">Terrestre</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="#gnss" data-toggle="tab" onclick="recupIDLien(this.href), changementMethode()">GNSS</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="#nivellement" data-toggle="tab" onclick="recupIDLien(this.href), changementMethode()">Nivellement</a>
-            </li>
-          </ul>
+        </div>
           
-          <div class="tab-content">
-            <!-- ----------------------------------- PASSAGE TERRESTRE ----------------------------------- -->
-            <div class="tab-pane fade show active" id="terrestre">
-              <!-- Contenu Station -->
-              <div class="mt-2 greyBackground border border-dark p-1">
-                <h5 class="mx-1 mt-0">Stations terrestres</h5>
-                <table class="table table-hover" style="width: 100%"> 
-                  <!-- Mis en surbrillance lors du passage de la souris sur ligne tbl avec table table-hover -->
-                  <!-- En tete tableau -->
-                  <thead> 
-                    <tr>
-                      <td class="row_ligne">N° Station</td>
-                      <td class="row_ligne1" style="text-align : center">Activate</td> 
-                      <td class="row_ligne1" style="text-align : center">Map</td>                                                         
+        <!-- https://bootstrap-top-design.com/menu-a-onglet-avec-bootstrap/ -->
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#terrestre" data-toggle="tab"  onclick="recupIDLien(this.href), changementMethode()">Terrestre</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#gnss" data-toggle="tab" onclick="recupIDLien(this.href), changementMethode()">GNSS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#nivellement" data-toggle="tab" onclick="recupIDLien(this.href), changementMethode()">Nivellement</a>
+          </li>
+        </ul>
+        
+        <div class="tab-content">
+          <!-- ----------------------------------- PASSAGE TERRESTRE ----------------------------------- -->
+          <div class="tab-pane fade show active" id="terrestre">
+            <!-- Contenu Station -->
+            <div class="mt-2 greyBackground border border-dark p-1">
+              <h5 class="mx-1 mt-0">Stations terrestres</h5>
+              <table class="table table-hover" style="width: 100%"> 
+                <!-- Mis en surbrillance lors du passage de la souris sur ligne tbl avec table table-hover -->
+                <!-- En tete tableau -->
+                <thead> 
+                  <tr>
+                    <td class="row_ligne">N° Station</td>
+                    <td class="row_ligne1" style="text-align : center">Activate</td> 
+                    <td class="row_ligne1" style="text-align : center">Map</td>                                                         
+                  </tr>
+                </thead>
+                  
+                <!-- Contenu du tableau -->
+                <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar" id="tblSt_terrestre">                    
+                  <!-- https://mdbootstrap.com/docs/b4/jquery/tables/scroll/ -->
+                  <tr>
+                    <td class="row_ligne">              
+                        <select name="numSt_0" id="St_terrestre_0" class='select' onclick="recoverStation(points_global,this)">
+                          <option value='numSt'><span id='numSt'></span></option>
+                        </select>                      
+                    </td>
+                    <td class="row_ligne1">
+                      <input type=radio name="flexRadioDefault" id="Activate_terrestre_0" disabled="disabled" onclick = "activateStation()">
+                    </td>
+                    <td class="row_ligne1">
+                      <input type=checkbox name="flexCheckDefault" id="Map_terrestre_0" checked = true disabled="disabled" onclick = "etatCheck(this)">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button id="deleteSt_terrestre" type="button" disabled="disabled" onclick="deleteObsSta()">Delete</button> 
+              <button id="editCheck_terrestre" type="button" onclick="allDeSelectCheck(dico_mes)">All decheck</button> 
+            </div>
+
+            <!-- Contenu Observation -->
+            <div class="mt-2 greyBackground border border-dark p-1">
+              <h5 class="mx-1 mt-0">Observation terrestre</h5>
+              <table class="table table-hover" style="width: 100%"> 
+                <thead> 
+                  <tr>
+                    <td class="row_ligne">N° Obs</td>
+                    <td class="row_ligne2" style="text-align : left">RI</td> 
+                    <td class="row_ligne2" style="text-align : left">DS</td> 
+                    <td class="row_ligne2" style="text-align : left">ZD</td> 
+                  </tr>
+                </thead>
+
+                <!-- Contenu du tableau -->
+                <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-obs" id="tblObs_terrestre">   
+                </tbody>
+              </table>
+              <button id="deleteObs_terrestre" type="button" disabled="disabled" onclick="deleteObs()">Delete</button> 
+            </div>  
+          </div>
+
+          <!-- ----------------------------------- PASSAGE GNSS ----------------------------------- -->
+          <div class="tab-pane fade" id="gnss">
+            <div class="mt-2 greyBackground border border-dark p-1">
+              <h5 class="mx-1 mt-0">Session GNSS</h5>
+              <table class="table table-hover" style="width: 100%"> 
+                <thead>
+                  <tr>
+                    <td class="row_ligne">N° Session</td>
+                    <td class="row_ligne1">Activate</td> 
+                    <td class="row_ligne1">Map</td>          
+                  </tr>
+                </thead>
+
+                <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-gnss" id="tblSt_gnss">                    
+                  <div class="table-bordered mb-0">
+                    <tr >                      
+                      <td class="row_ligne">1          
+                      </td>
+                      <td class="row_ligne1">
+                        <input type=radio name="flexRadioDefault" id="Activate_gnss_0" disabled="disabled" onclick = "activateStation()">
+                      </td>
+                      <td class="row_ligne1">
+                        <input type=checkbox name="flexCheckDefault" id="Map_gnss_0" disabled="disabled" onclick = "etatCheck(this)">
+                      </td>
                     </tr>
-                  </thead>
-                    
-                  <!-- Contenu du tableau -->
-                  <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar" id="tblSt_terrestre">                    
-                    <!-- https://mdbootstrap.com/docs/b4/jquery/tables/scroll/ -->
+                  </div>
+                </tbody>
+              </table>
+              <button id="deleteSt_gnss" type="button" disabled="disabled" onclick="deleteObsSta()">Delete</button> 
+              <button id="addSession" type="button" onclick="addSession()">+ Session</button> 
+              <button id="editCheck_gnss" type="button" onclick="allDeSelectCheck(dico_mes)">All decheck</button> 
+            </div>
+                  
+            <div class="mt-2 greyBackground border border-dark p-1">
+              <h5 class="mx-1 mt-0">Observation GNSS</h5>
+              <table class="table table-hover"> 
+                <thead> 
+                  <tr>
+                    <td class="row_ligne">N° Obs</td>
+                    <td class="row_ligne2" style="text-align : left">LX</td> 
+                    <td class="row_ligne2" style="text-align : left">LY</td> 
+                    <td class="row_ligne2" style="text-align : left">LH</td> 
+                  </tr>
+                </thead>
+
+                <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-obs" id="tblObs_gnss">                    
+                </tbody>
+              </table>
+              <button id="deleteObs_gnss" type="button" disabled="disabled" onclick="deleteObs()">Delete</button> 
+            </div>   
+          </div>
+          <!-- ----------------------------------- PASSAGE Nivellement ----------------------------------- -->
+          <div class="tab-pane fade" id="nivellement">
+            <div class="mt-2 greyBackground border border-dark p-1">
+              <h5 class="mx-1 mt-0">Station nivellement</h5>
+              <table class="table table-hover"> 
+                <thead>
+                  <tr>
+                    <td class="row_ligne">N° Station</td>
+                    <td class="row_ligne1" style="text-align : center">Activate</td> 
+                    <td class="row_ligne1" style="text-align : center">Map</td>                                   
+                  </tr>
+                </thead>  
+
+                <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar" id="tblSt_nivellement">                    
+                  <div class="table-bordered mb-0">
                     <tr>
                       <td class="row_ligne">              
-                          <select name="numSt_0" id="St_terrestre_0" class='select' onclick="recoverStation(points_global,this)">
-                            <option value='numSt'><span id='numSt'></span></option>
+                          <select name="numSt_0" id="St_nivellement_0" onclick="recoverStation(points_global,this)">
+                            <option value='numSt'><span id='numSt'> </span></option>
                           </select>                      
                       </td>
                       <td class="row_ligne1">
-                        <input type=radio name="flexRadioDefault" id="Activate_terrestre_0" disabled="disabled" onclick = "activateStation()">
+                        <input type=radio name="flexRadioDefault" id="Activate_nivellement_0" disabled="disabled" onclick = "activateStation()">
                       </td>
                       <td class="row_ligne1">
-                        <input type=checkbox name="flexCheckDefault" id="Map_terrestre_0" checked = true disabled="disabled" onclick = "etatCheck(this)">
+                        <input type=checkbox name="flexCheckDefault" id="Map_nivellement_0" disabled="disabled" onclick = "etatCheck(this)">
                       </td>
                     </tr>
-                  </tbody>
-                </table>
-                <button id="deleteSt_terrestre" type="button" disabled="disabled" onclick="deleteObsSta()">Delete</button> 
-                <button id="editCheck_terrestre" type="button" onclick="allDeSelectCheck(dico_mes)">All decheck</button> 
-              </div>
-
-              <!-- Contenu Observation -->
-              <div class="mt-2 greyBackground border border-dark p-1">
-                <h5 class="mx-1 mt-0">Observation terrestre</h5>
-                <table class="table table-hover" style="width: 100%"> 
-                  <thead> 
-                    <tr>
-                      <td class="row_ligne">N° Obs</td>
-                      <td class="row_ligne2" style="text-align : left">RI</td> 
-                      <td class="row_ligne2" style="text-align : left">DS</td> 
-                      <td class="row_ligne2" style="text-align : left">ZD</td> 
-                    </tr>
-                  </thead>
-
-                  <!-- Contenu du tableau -->
-                  <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-obs" id="tblObs_terrestre">   
-                  </tbody>
-                </table>
-                <button id="deleteObs_terrestre" type="button" disabled="disabled" onclick="deleteObs()">Delete</button> 
-              </div>  
+                  </div>
+                </tbody>
+              </table>
+              <button id="deleteSt_nivellement" type="button" disabled="disabled" onclick="deleteObsSta()">Delete</button> 
+              <button id="editCheck_nivellement" type="button" onclick="allDeSelectCheck(dico_mes)">All decheck</button> 
             </div>
-            <!-- /. fin passage terrestre -->
-
-            <!-- ----------------------------------- PASSAGE GNSS ----------------------------------- -->
-            <div class="tab-pane fade" id="gnss">
-              <div class="mt-2 greyBackground border border-dark p-1">
-                <h5 class="mx-1 mt-0">Session GNSS</h5>
-                <table class="table table-hover" style="width: 100%"> 
-                  <thead>
-                    <tr>
-                      <td class="row_ligne">N° Session</td>
-                      <td class="row_ligne1">Activate</td> 
-                      <td class="row_ligne1">Map</td>          
-                    </tr>
-                  </thead>
-
-                  <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-gnss" id="tblSt_gnss">                    
-                    <div class="table-bordered mb-0">
-                      <tr >                      
-                        <td class="row_ligne">1          
-                        </td>
-                        <td class="row_ligne1">
-                          <input type=radio name="flexRadioDefault" id="Activate_gnss_0" disabled="disabled" onclick = "activateStation()">
-                        </td>
-                        <td class="row_ligne1">
-                          <input type=checkbox name="flexCheckDefault" id="Map_gnss_0" disabled="disabled" onclick = "etatCheck(this)">
-                        </td>
-                      </tr>
-                    </div>
-                  </tbody>
-                </table>
-                <button id="deleteSt_gnss" type="button" disabled="disabled" onclick="deleteObsSta()">Delete</button> 
-                <button id="addSession" type="button" onclick="addSession()">+ Session</button> 
-                <button id="editCheck_gnss" type="button" onclick="allDeSelectCheck(dico_mes)">All decheck</button> 
-              </div>
-                    
-              <div class="mt-2 greyBackground border border-dark p-1">
-                <h5 class="mx-1 mt-0">Observation GNSS</h5>
-                <table class="table table-hover"> 
-                  <thead> 
-                    <tr>
-                      <td class="row_ligne">N° Obs</td>
-                      <td class="row_ligne2" style="text-align : left">LX</td> 
-                      <td class="row_ligne2" style="text-align : left">LY</td> 
-                      <td class="row_ligne2" style="text-align : left">LH</td> 
-                    </tr>
-                  </thead>
-
-                  <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-obs" id="tblObs_gnss">                    
-                  </tbody>
-                </table>
-                <button id="deleteObs_gnss" type="button" disabled="disabled" onclick="deleteObs()">Delete</button> 
-              </div>   
-            </div>
-            <!-- /. fin passage GNSS -->
-
-            <!-- ----------------------------------- PASSAGE Nivellement ----------------------------------- -->
-            <div class="tab-pane fade" id="nivellement">
-              <div class="mt-2 greyBackground border border-dark p-1">
-                <h5 class="mx-1 mt-0">Station nivellement</h5>
-                <table class="table table-hover"> 
-                  <thead>
-                    <tr>
-                      <td class="row_ligne">N° Station</td>
-                      <td class="row_ligne1" style="text-align : center">Activate</td> 
-                      <td class="row_ligne1" style="text-align : center">Map</td>                                   
-                    </tr>
-                  </thead>  
-
-                  <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar" id="tblSt_nivellement">                    
-                    <div class="table-bordered mb-0">
-                      <tr>
-                        <td class="row_ligne">              
-                            <select name="numSt_0" id="St_nivellement_0" onclick="recoverStation(points_global,this)">
-                              <option value='numSt'><span id='numSt'> </span></option>
-                            </select>                      
-                        </td>
-                        <td class="row_ligne1">
-                          <input type=radio name="flexRadioDefault" id="Activate_nivellement_0" disabled="disabled" onclick = "activateStation()">
-                        </td>
-                        <td class="row_ligne1">
-                          <input type=checkbox name="flexCheckDefault" id="Map_nivellement_0" disabled="disabled" onclick = "etatCheck(this)">
-                        </td>
-                      </tr>
-                    </div>
-                  </tbody>
-                </table>
-                <button id="deleteSt_nivellement" type="button" disabled="disabled" onclick="deleteObsSta()">Delete</button> 
-                <button id="editCheck_nivellement" type="button" onclick="allDeSelectCheck(dico_mes)">All decheck</button> 
-              </div>
-          
-              <div class="mt-2 greyBackground border border-dark p-1">
-                <h5 class="mx-1 mt-0">Observation Nivellement</h5>
-                <table class="table table-hover"> 
-                  <thead> 
-                    <tr>
-                      <td class="row_ligne3">N° Obs</td>
-                    </tr>
-                  </thead>
-                  <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-nivellement" id="tblObs_nivellement">              
-                  </tbody>
-                </table>
-                <button id="deleteObs_nivellement" type="button" disabled="disabled" onclick="deleteObs()">Delete</button> 
-              </div> 
-            </div>    
-            <!-- ----------------------------------- FIN Nivellement - FIN TABLEAU METHODE ----------------------------------- -->
-
-          </div>
         
-          <div class="creditHEIG">
-            © HEIG-VD 2023 - SIG4
-          </div>
+            <div class="mt-2 greyBackground border border-dark p-1">
+              <h5 class="mx-1 mt-0">Observation Nivellement</h5>
+              <table class="table table-hover"> 
+                <thead> 
+                  <tr>
+                    <td class="row_ligne3">N° Obs</td>
+                  </tr>
+                </thead>
+                <tbody class="scroller table-wrapper-scroll-y my-custom-scrollbar-nivellement" id="tblObs_nivellement">              
+                </tbody>
+              </table>
+              <button id="deleteObs_nivellement" type="button" disabled="disabled" onclick="deleteObs()">Delete</button> 
+            </div> 
+          </div>    
+          <!-- ----------------------------------- FIN Nivellement - FIN TABLEAU METHODE ----------------------------------- -->
+
         </div>
-
-        <!-- Partie droite - CARTE -->
-        <div class="col" id="map">
-        </div> 
-
-      </div>
-
-      <div class="PositionExport" >
-        <button class="w3-button" id="export" type ="button" onclick="export_KOO(points_global), export_MES(dico_mes)">
-          <img src="./img/export.svg" alt="layers" class="imgLayers" width="50" title="Export .MES et .KOO"/>
-        </button>
-      </div>
-
-      <div class="PositionMovePt" >
-        <button class="w3-button" id="deplacerPt" disabled="disabled" onclick="deplacerPt()">
-          <img src="./img/move.svg" alt="layers" class="imgLayers" width="50" title="Deplacer point"/>
-        </button>
-      </div>
-
-      <!-- Button for layers -->
-      <!-- https://www.w3schools.com/w3css/w3css_buttons.asp -->
-      <div class="PositionLayerChange w3-dropdown-hover w3-right" >
-        <button class="w3-button">
-          <img src="./img/map_fond_carte.svg" alt="layers" class="imgLayers" width="50" />
-        </button>
-        <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-          <a onclick="changeBackground('CN')" class="w3-bar-item w3-button">CN</a>
-          <a onclick="changeBackground('swissSurface3D')" class="w3-bar-item w3-button">swissSurface3D</a>
-          <a onclick="changeBackground('MO')" class="w3-bar-item w3-button">MO</a>
-          <a onclick="changeBackground('swissimage')" class="w3-bar-item w3-button">swissImage</a>
-          <a onclick="changeBackground('nothing')" class="w3-bar-item w3-button">-</a>
+      
+        <div class="creditHEIG">
+          © HEIG-VD 2023 - SIG4
         </div>
       </div>
 
-      <div class="PositionMapChange w3-dropdown-hover w3-right" >
-        <button class="w3-button">
-          <img src="./img/layer.svg" alt="layers" class="imgLayers" width="50" />
-        </button>
+      <!-- Partie droite - CARTE -->
+      <div class="col" id="map">
+        <!-- Button for print -->
+        <!-- <div class="ol-print ol-unselectable ol-control" style="pointer-events: auto;">
+          <button class="button-print" type="button" title="Print" >
+          </button>
+        </div> -->
+      </div> 
 
-        <div class="w3-dropdown-content w3-bar-block w3-border" style="right:10">
-          <a class="w3-bar-item w3-button"> 
-            <label class="checkboxLabel" for="checkboxDirections" id="legendeDir">
-              OBSERVATION TERRESTRE
-            </label> 
-          </a>
-          <div class="w3-dropleft-content w3-bar-block w3-border" style="right:10">
-          <a class="w3-bar-item w3-button">                
-            <input class="form-check-input" type="checkbox" id="checkboxDirections" onchange="changeLayerVisibilityDirections()" checked>
-            <label class="checkboxLabel" for="checkboxDirections" id="legendeDir">
-              Directions
-            </label></a>
-          <a class="w3-bar-item w3-button">
-            <input class="form-check-input" type="checkbox" id="checkboxDistances" onchange="changeLayerVisibilityDistances()" checked>
-            <label class="checkboxLabel" for="checkboxDistances" id="legendeDist">
-              Distances
-            </label>
-          </a>
-          <a class="w3-bar-item w3-button">
-            <input class="form-check-input" type="checkbox" id="checkboxPoints" onchange="changeLayerVisibilityPoint()" checked>
-            <label class="checkboxLabel" for="checkboxPoints" id="legendePoint">
-              Points
-            </label>
-          </a>
-        </div>
+    </div>
 
-        <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-          <a class="w3-bar-item w3-button "> 
-            <label class="checkboxLabel" for="checkboxGnss" id="legendeDir">
-              OBSERVATION GNNS
-            </label> 
-          </a>
-          <div class="w3-dropleft-content w3-bar-block w3-border" style="right:10">
-          <a class="w3-bar-item w3-button">
-            <input class="form-check-input" type="checkbox" id="checkboxGnss" onchange="changeLayerVisibilityGnss()" checked>
-            <label class="checkboxLabel" for="checkboxGnss" id="legendeGnss">
-              Gnss
-            </label>
-          </a>
-        </div>
+    <div class="PositionExport" >
+      <button class="w3-button" id="export" type ="button" onclick="export_KOO(points_global), export_MES(dico_mes)">
+        <img src="./img/export.svg" alt="layers" class="imgLayers" width="50" title="Export .MES et .KOO"/>
+      </button>
+    </div>
 
-        <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
-          <a class="w3-bar-item w3-button "> 
-            <label class="checkboxLabel" for="checkboxNivellement" id="legendeNiv">
-              OBSERVATION Nivellement
-            </label> 
-          </a>
-          <div class="w3-dropleft-content w3-bar-block w3-border" style="right:10">
-          <a class="w3-bar-item w3-button">
-            <input class="form-check-input" type="checkbox" id="checkboxNivellement" onchange="changeLayerVisibilityNivellement()" checked>
-            <label class="checkboxLabel" for="checkboxNivellement" id="legendeNiv">
-              Nivellement
-            </label>
-          </a>
-        </div> 
+    <div class="PositionMovePt" >
+      <button class="w3-button" id="deplacerPt" disabled="disabled" onclick="deplacerPt()">
+        <img src="./img/move.svg" alt="layers" class="imgLayers" width="50" title="Deplacer point"/>
+      </button>
+    </div>
+
+    <!-- Button for layers -->
+    <!-- https://www.w3schools.com/w3css/w3css_buttons.asp -->
+    <div class="PositionLayerChange w3-dropdown-hover w3-right" >
+      <button class="w3-button">
+        <img src="./img/map_fond_carte.svg" alt="layers" class="imgLayers" width="50" />
+      </button>
+      <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+        <a onclick="changeBackground('CN')" class="w3-bar-item w3-button">CN</a>
+        <a onclick="changeBackground('swissSurface3D')" class="w3-bar-item w3-button">swissSurface3D</a>
+        <a onclick="changeBackground('MO')" class="w3-bar-item w3-button">MO</a>
+        <a onclick="changeBackground('swissimage')" class="w3-bar-item w3-button">swissImage</a>
+        <a onclick="changeBackground('nothing')" class="w3-bar-item w3-button">-</a>
       </div>
     </div>
 
-    <!-- Librairie : JQuery / Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="./js/boostrap/bootstrap.js"></script>
+    <div class="PositionMapChange w3-dropdown-hover w3-right" >
+      <button class="w3-button">
+        <img src="./img/layer.svg" alt="layers" class="imgLayers" width="50" />
+      </button>
 
-    <!-- Librairie NAV  -->
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-    
-    <!-- Librairie : OpenLayers / ol-ext -->
-    <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
-    <script type="text/javascript" src="./js/ol-ext.js"></script>
-    
-    <!-- Script personnel -->
-    <script src="./js/Stylepoint.js"></script>
-    <script src="./js/MapOpenLayers.js"></script>
-    <script src="./js/ChangeBackground.js"></script>
-    <script src="./js/Coord.js"></script>
-    <script src="./js/PrintMap.js"></script>
+      <div class="w3-dropdown-content w3-bar-block w3-border" style="right:10">
+        <a class="w3-bar-item w3-button"> 
+          <label class="checkboxLabel" for="checkboxDirections" id="legendeDir">
+            OBSERVATION TERRESTRE
+          </label> 
+        </a>
+        <div class="w3-dropleft-content w3-bar-block w3-border" style="right:10">
+        <a class="w3-bar-item w3-button">                
+          <input class="form-check-input" type="checkbox" id="checkboxDirections" onchange="changeLayerVisibilityDirections()" checked>
+          <label class="checkboxLabel" for="checkboxDirections" id="legendeDir">
+            Directions
+          </label></a>
+        <a class="w3-bar-item w3-button">
+          <input class="form-check-input" type="checkbox" id="checkboxDistances" onchange="changeLayerVisibilityDistances()" checked>
+          <label class="checkboxLabel" for="checkboxDistances" id="legendeDist">
+            Distances
+          </label>
+        </a>
+        <a class="w3-bar-item w3-button">
+          <input class="form-check-input" type="checkbox" id="checkboxPoints" onchange="changeLayerVisibilityPoint()" checked>
+          <label class="checkboxLabel" for="checkboxPoints" id="legendePoint">
+            Points
+          </label>
+        </a>
+      </div>
 
-    <script src="./js/Add_Point.js"></script>
-    <script src="./js/DeplacerPT.js"></script>
-    <script src="./js/GetAltitude_API.js"></script>
+      <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+        <a class="w3-bar-item w3-button "> 
+          <label class="checkboxLabel" for="checkboxGnss" id="legendeDir">
+            OBSERVATION GNNS
+          </label> 
+        </a>
+        <div class="w3-dropleft-content w3-bar-block w3-border" style="right:10">
+        <a class="w3-bar-item w3-button">
+          <input class="form-check-input" type="checkbox" id="checkboxGnss" onchange="changeLayerVisibilityGnss()" checked>
+          <label class="checkboxLabel" for="checkboxGnss" id="legendeGnss">
+            Gnss
+          </label>
+        </a>
+      </div>
 
-    <script src="./js/MapVisee.js"></script>
-    <script src="./js/MapPoints.js"></script>
-    <script src="./js/CheckboxLayer.js"></script>
+      <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+        <a class="w3-bar-item w3-button "> 
+          <label class="checkboxLabel" for="checkboxNivellement" id="legendeNiv">
+            OBSERVATION Nivellement
+          </label> 
+        </a>
+        <div class="w3-dropleft-content w3-bar-block w3-border" style="right:10">
+        <a class="w3-bar-item w3-button">
+          <input class="form-check-input" type="checkbox" id="checkboxNivellement" onchange="changeLayerVisibilityNivellement()" checked>
+          <label class="checkboxLabel" for="checkboxNivellement" id="legendeNiv">
+            Nivellement
+          </label>
+        </a>
+      </div> 
+    </div>
+  </div>
 
-    <script src="./js/DeleteStation.js"></script>
-    <script src="./js/DeleteObservation.js"></script>
-    <script src="./js/DeletePoints.js"></script>
+  <!-- On en a terminé avec l'HTML, à partir d'ici, place au JavaScript -->
 
-    <script src="./js/AffichagePtTblStation.js"></script>
-    <script src="./js/AffichagePtTblObservation.js"></script>
+  <!-- Librairie : JQuery / Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="./js/old/boostrap/bootstrap.js"></script>
 
-    <script src="./js/Station.js"></script>
-    <script src="./js/Observation.js"></script>
+  <!-- Librairie NAV  -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  
+  <!-- Librairie : OpenLayers / ol-ext -->
+  <script src="https://cdn.jsdelivr.net/npm/ol@v7.1.0/dist/ol.js"></script>
+  <script type="text/javascript" src="./js/old/ol-ext/ol-ext.js"></script>
+  
+  <!-- Librairie PDF : https://github.com/MrRio/jsPDF / filesaver-js -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/eligrey/FileSaver.js/aa9f4e0e/FileSaver.min.js"></script>
 
-    <script src="./js/Import_KOO.js"></script>
-    <script src="./js/Import_MES.js"></script>
+  <!-- Script personnel -->
+  <script src="./js/old/Stylepoint.js"></script>
+  <script src="./js/old/MapOpenLayers.js"></script>
+  <script src="./js/old/ChangeBackground.js"></script>
+  <script src="./js/old/Coord.js"></script>
+  <script src="./js/old/PrintMap.js"></script>
 
-    <script src="./js/Export_KOO.js"></script>
-    <script src="./js/Export_MES.js"></script>
+  <script src="./js/old/Add_Point.js"></script>
+  <script src="./js/old/DeplacerPT.js"></script>
+  <script src="./js/old/GetAltitude_API.js"></script>
 
-    <script src="./js/Action_general.js"></script>
-    <script src="./js/layerStation.js"></script>
-    
-  </body>
+  <script src="./js/old/MapVisee.js"></script>
+  <script src="./js/old/MapPoints.js"></script>
+  <script src="./js/old/CheckboxLayer.js"></script>
+
+  <script src="./js/old/DeleteStation.js"></script>
+  <script src="./js/old/DeleteObservation.js"></script>
+  <script src="./js/old/DeletePoints.js"></script>
+
+  <script src="./js/old/AffichagePtTblStation.js"></script>
+  <script src="./js/old/AffichagePtTblObservation.js"></script>
+
+  <script src="./js/old/Station.js"></script>
+  <script src="./js/old/Observation.js"></script>
+
+  <script src="./js/old/Import_KOO.js"></script>
+  <script src="./js/old/Import_MES.js"></script>
+
+  <script src="./js/old/Export_KOO.js"></script>
+  <script src="./js/old/Export_MES.js"></script>
+
+  <script src="../js/old/Action_general.js"></script>
+  <script src="./js/old/layerStation.js"></script>
+  
+</body>
 
 </html>
