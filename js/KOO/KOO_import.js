@@ -1,9 +1,5 @@
-/** Import du fichier de point (extension .KOO) selon format LTOP
- * 
- * 
- */
 
-document.getElementById('importFileSelect_KOO').onchange = function(){
+function KOO_import(){
 
     /*TODO: 
     -------
@@ -13,14 +9,15 @@ document.getElementById('importFileSelect_KOO').onchange = function(){
     --> on ajoute au dico déjà rempli ?
     */ 
 
-   
+    // Get file and path
+    let fileName = document.getElementById('inputFileKOO').files[0];
+
     // Lecture du fichier
-    const file = this.files[0];
-    const reader = new FileReader();
-    reader.onload = function(progressEvent){    
+    let reader = new FileReader();
+    reader.onload = function(){    
        
         // Contenu du fichier ASCII
-        const fileContentArray = this.result.split(/\r\n|\n/);
+        const fileContentArray = reader.result.split(/\r\n|\n/);
 
         // Parcours des lignes du fichier ASCII
         for(let i = 0; i < fileContentArray.length-1; i++){
@@ -160,5 +157,5 @@ document.getElementById('importFileSelect_KOO').onchange = function(){
     };
 
     // Lecture du fichier
-    reader.readAsText(file);
+    reader.readAsText(fileName);
     };

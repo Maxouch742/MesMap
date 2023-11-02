@@ -77,4 +77,6 @@ function displayPoints(){
     points_layer.setSource(points_source);
     points_layer.setZIndex(99);
     map.addLayer(points_layer);
+    displayLayers('points');
+    displayPointsLegend(points_type_couleur);
 }

@@ -9,7 +9,7 @@ type_color = {
     '7': '#000299',  //bleu fonce
     '8': '#FF004F',  //rose
     '9': '#FBFF00',  //jaune
-    '10': '#C1C1C1', //gris clair
+    '10': '#000000', //gris clair
     '11': '#00FFB2', //bleu-vert
     '12': '#515151', //gris fonce
 };
