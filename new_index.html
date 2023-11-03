@@ -84,14 +84,14 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panel-obsGNSS" aria-expanded="false" aria-controls="panel-obsGNSS">
-                                    <h5>Observations GNSS</h5>
+                                    <h5>Nivellement</h5>
                                 </button>
                             </h2>
 
                             <div class="accordion-collapse collapse" id="panel-obsGNSS">
                                 <div class="accordion-body">
                                     
-                                    <p>GNSS</p>
+                                    <button id="html_levellingCreate" onclick="levelling_create()">Ajouter un cheminement</button>
 
                                 </div>
                                 <!-- ./ fin du "accordion-body"-->
@@ -129,11 +129,13 @@
         <script srC="./js/map/defineView.js"></script>
         <script src="./js/map/defineMap.js"></script>
 
+        <script src="./js/levelling/levelling_constants.js"></script>
+        <script src="./js/levelling/levelling_create.js"></script>
+
         <script src="./js/color_constants.js"></script>
 
         <script src="./js/display/displayPoints.js"></script>
         <script src="./js/display/displayPointsLegend.js"></script>
-
         <script src="./js/display/displayLayers.js"></script>
 
         <script src="./js/KOO/KOO_constants.js"></script>

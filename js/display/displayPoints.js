@@ -15,7 +15,7 @@ function displayPoints(){
     // Parcours de l'objet pour déterminer les couleurs par types
     for (let i=0; i<points_global['features'].length; i++){
         const point = points_global['features'][i];
-        const point_type = point['properties']['type'];
+        const point_type = point['properties']['date'];
 
         // Si le type n'est pas présent dans l'objet "points_type_couleur"
         if (Object.keys(points_type_couleur).includes(point_type) === false){
@@ -45,12 +45,12 @@ function displayPoints(){
             name: point['properties']['id'],
             properties: point['properties'],
         });
+
+        // Ajout du feature dans la source du levelling
+        levelling_source.addFeature(point_feature);
+
+        // Ajout du feature dans la source des points
         point_feature.setStyle( new ol.style.Style({
-            image: new ol.style.Icon({
-                src: './img/circle_filled_white.svg',
-                scale: '0.02',
-                color: String(type_color[ points_type_couleur[point['properties']['type']] ]) ,
-            }),
             text: new ol.style.Text({
                 text: point['properties']['id'],
                 textAlign: "center",
@@ -66,10 +66,18 @@ function displayPoints(){
                 offsetX: 15.0,
                 offsetY: -10.0,
                 rotation: 0
+            }),
+            image: new ol.style.Circle({
+                radius: 6,
+                fill: new ol.style.Fill({
+                    color: String(type_color[ points_type_couleur[point['properties']['date']] ]),
+                }),
+                stroke: new ol.style.Stroke({
+                    color: String(type_color[ points_type_couleur[point['properties']['date']] ]),
+                    width: 1,
+                }),
             })
         }));
-
-        // Ajout du feature dans la source
         points_source.addFeature(point_feature);
     };
 
