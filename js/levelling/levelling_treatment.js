@@ -1,99 +1,90 @@
 function levelling_treatment(list_features){
 
-    // Créer l'object avec tous les nivellements
-    const cheminement = {};
-
     // Parcours de la liste des features (lignes)
     list_features.forEach(function (feature){
 
         // Récupérer les différentes informations
         const feature_id = feature.getId();
-        const feature_coord = feature.getGeometry().getCoordinates();
 
-        // Créer le tableau (liste) des stations et visées
-        let array_sta_vis = [];
-        
-        // Variables pour comparer et trouver les stations / visees, ...
-        let station = false;
-        let station_coordinate = false;
-        let visee = false;
-        let distance = 0.0;
+        // on vérifie si le cheminement n'est pas déjà enregistré
+        if (!(feature_id in cheminement)){
 
-        // Parcours des coordonnées
-        feature_coord.forEach( function(coordinate){
-            console.log(coordinate);
+            const feature_coord = feature.getGeometry().getCoordinates();
 
-            // Récupérer le matricule si c'est un point cliqué
-            points_global["features"].forEach( function(element){
+            // Créer le tableau (liste) des stations et visées
+            let array_sta_vis = [];
+            
+            // Variables pour comparer et trouver les stations / visees, ...
+            let station = false;
+            let station_coordinate = false;
+            let visee = false;
+            let distance = 0.0;
 
-                // Si le point cliqué est présent le fichier KOO
-                if (coordinate[0] === element['geometry']['coordinates'][0] &&
-                    coordinate[1] === element['geometry']['coordinates'][1]){
-                    
-                    // Si aucune station n'est enregistre, notre point devient une station
-                    if (station === false){ 
-                        station = element['properties']['id'] ;
-                        station_coordinate = element['geometry']['coordinates'];
-                    }
+            // Parcours des coordonnées
+            feature_coord.forEach( function(coordinate){
+                console.log(coordinate);
 
-                    // Si la station est déjà enregistré
-                    else if (station !== false){
+                // Récupérer le matricule si c'est un point cliqué
+                points_global["features"].forEach( function(element){
 
-                        // si la visée n'est pas enregistré, cela devient alors une visée
-                        if (visee === false && station !== false){
-
-                            // On calcule alors la distance 
-                            const dE = station_coordinate[0] - element['geometry']['coordinates'][0];
-                            const dN = station_coordinate[1] - element['geometry']['coordinates'][1];
-                            console.log(dE, dN)
-                            distance += Math.sqrt( dE*dE + dN*dN );
-                            console.log('Distance',distance);
+                    // Si le point cliqué est présent le fichier KOO
+                    if (coordinate[0] === element['geometry']['coordinates'][0] &&
+                        coordinate[1] === element['geometry']['coordinates'][1]){
+                        
+                        // Si aucune station n'est enregistre, notre point devient une station
+                        if (station === false){ 
+                            station = element['properties']['id'] ;
                             station_coordinate = element['geometry']['coordinates'];
+                        }
 
-                            // Récupérer la visée
-                            visee = element['properties']['id'];
+                        // Si la station est déjà enregistré
+                        else if (station !== false){
 
-                            console.log(station, visee, distance);
+                            // si la visée n'est pas enregistré, cela devient alors une visée
+                            if (visee === false && station !== false){
 
-                            // ajoute le cheminement au list
-                            array_sta_vis.push({ 'station':station, 'visee':visee, 'distance':distance });
+                                // On calcule alors la distance 
+                                const dE = station_coordinate[0] - element['geometry']['coordinates'][0];
+                                const dN = station_coordinate[1] - element['geometry']['coordinates'][1];
+                                console.log(dE, dN)
+                                distance += Math.sqrt( dE*dE + dN*dN );
+                                console.log('Distance',distance);
+                                station_coordinate = element['geometry']['coordinates'];
 
-                            station = visee;
-                            station_coordinate = element['geometry']['coordinates'];
-                            visee = false;
-                            distance = 0;
-                            console.log('distance remise à zéro');
+                                // Récupérer la visée
+                                visee = element['properties']['id'];
+
+                                console.log(station, visee, distance);
+
+                                // ajoute le cheminement au list
+                                array_sta_vis.push({ 'station':station, 'visee':visee, 'distance':distance });
+
+                                station = visee;
+                                station_coordinate = element['geometry']['coordinates'];
+                                visee = false;
+                                distance = 0;
+                                console.log('distance remise à zéro');
+                            }
                         }
                     }
-                }
-                // Si le point cliqué n'est pas le fichier KOO
-                else {
+                    // Si le point cliqué n'est pas le fichier KOO
+                    else {
 
-                    // On vérifie que les coordonnées existe
-                    if (station_coordinate !== false && visee !== false && station !== false){
-                        // On met juste à jour la distance
-                        const dE = station_coordinate[0] - element['geometry']['coordinates'][0];
-                        const dN = station_coordinate[1] - element['geometry']['coordinates'][1];
-                        distance += Math.sqrt( dE*dE + dN*dN );
-                        station_coordinate = element['geometry']['coordinates'];
+                        // On vérifie que les coordonnées existe
+                        if (station_coordinate !== false && visee !== false && station !== false){
+                            // On met juste à jour la distance
+                            const dE = station_coordinate[0] - element['geometry']['coordinates'][0];
+                            const dN = station_coordinate[1] - element['geometry']['coordinates'][1];
+                            distance += Math.sqrt( dE*dE + dN*dN );
+                            station_coordinate = element['geometry']['coordinates'];
+                        }
                     }
-                }
-            })
+                })
+            });
 
-            /*
-            TODO: 
-            1. savoir si la coordonnée est un point existant
-            2. si aucune station n'est enregistré, 
-                -> cela devient une station, on comptabilise les distances
-            3. si aucune visée n'est enregistrée,
-                -> cela devient une visée et on calcule la distance finale
-            -> sinon on compte la distance totale
-            */
-        });
+            cheminement[feature_id] = array_sta_vis
 
-        cheminement[feature_id] = array_sta_vis
-        console.log(array_sta_vis);
+            levelling_create_row(feature_id, array_sta_vis.length+1);
+        }
     });
-
-    console.log(cheminement);
 }

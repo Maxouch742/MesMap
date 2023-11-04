@@ -100,16 +100,15 @@
                                                 <th scope="col"></th>
                                                 <th scope="col"></th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
                                             <tr>
-                                                <th scope="row">Chem1</th>
-                                                <td>3</td>
-                                                <td>0.2</td>
-                                                <td><button type="button" class="btn"><i class="bi bi-gear"></i></button></td>
-                                                <td><button type="button" class="btn"><i class="bi bi-trash3"></i></button></td>
+                                                <th></th>
+                                                <th>mesurés</th>
+                                                <th>[mm/km]</th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
-                                        </tbody>
+                                        </thead>
+                                        <tbody id="levelling_tbody"></tbody>
                                     </table>
                                     
                                     <button id="html_levellingCreate" onclick="levelling_create()">Ajouter un cheminement</button>
@@ -153,6 +152,7 @@
         <script src="./js/levelling/levelling_constants.js"></script>
         <script src="./js/levelling/levelling_create.js"></script>
         <script src="./js/levelling/levelling_treatment.js"></script>
+        <script src="./js/levelling/levelling_create_row.js"></script>
 
         <script src="./js/color_constants.js"></script>
 
