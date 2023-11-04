@@ -47,7 +47,8 @@ function displayPoints(){
         });
 
         // Ajout du feature dans la source du levelling
-        levelling_source.addFeature(point_feature);
+        const point_feature_levelling = point_feature
+        levelling_source.addFeature(point_feature_levelling);
 
         // Ajout du feature dans la source des points
         point_feature.setStyle( new ol.style.Style({

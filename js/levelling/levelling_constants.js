@@ -16,9 +16,11 @@ map.addLayer(levelling_layer);
 // Variables globales
 levelling_create_button = true;
 let levelling_draw, levelling_snap;
+levelling_id = 1;
 
-// D'après example
+/*
+// Permet de modifier les choses existantes dans le layer
 const modify = new ol.interaction.Modify({
     source: levelling_source
 });
-map.addInteraction(modify);
+map.addInteraction(modify);*/

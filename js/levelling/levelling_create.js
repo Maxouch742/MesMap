@@ -3,8 +3,6 @@ function levelling_create(){
     map.removeInteraction(levelling_draw);
     map.removeInteraction(levelling_snap);
 
-    //TODO: ajouter les points dans la même couche
-
     // L'utilisateur souhaite ajouter un cheminement
     if (levelling_create_button === true){
 
@@ -28,5 +26,25 @@ function levelling_create(){
         // changer l'intitulé du bouton
         document.getElementById('html_levellingCreate').innerText = 'Ajouter un cheminement';
         levelling_create_button = true;
+
+        // Récupérer les features du levelling
+        let list_features_cheminements = [];
+        // parcourir la source du layer
+        levelling_source.forEachFeature( function(feature){
+
+            // On vérifie si le feature est un lineString
+            if (feature.getGeometry().getType() === 'LineString'){
+                
+                // Vérifier la non-présence de l'id pour ajouter un id
+                if (feature.getId() === undefined){
+                    feature.setId("Chem"+String(levelling_id));
+                    levelling_id ++;
+                };
+
+                // On ajoute les features dans la liste
+                list_features_cheminements.push(feature);
+            }
+        });
+        levelling_treatment(list_features_cheminements);
     }
 }
