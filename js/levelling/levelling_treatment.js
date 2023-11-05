@@ -22,7 +22,6 @@ function levelling_treatment(list_features){
 
             // Parcours des coordonnées
             feature_coord.forEach( function(coordinate){
-                console.log(coordinate);
 
                 // Récupérer le matricule si c'est un point cliqué
                 points_global["features"].forEach( function(element){
@@ -46,15 +45,11 @@ function levelling_treatment(list_features){
                                 // On calcule alors la distance 
                                 const dE = station_coordinate[0] - element['geometry']['coordinates'][0];
                                 const dN = station_coordinate[1] - element['geometry']['coordinates'][1];
-                                console.log(dE, dN)
                                 distance += Math.sqrt( dE*dE + dN*dN );
-                                console.log('Distance',distance);
                                 station_coordinate = element['geometry']['coordinates'];
 
                                 // Récupérer la visée
                                 visee = element['properties']['id'];
-
-                                console.log(station, visee, distance);
 
                                 // ajoute le cheminement au list
                                 array_sta_vis.push({ 'station':station, 'visee':visee, 'distance':distance });
@@ -63,7 +58,6 @@ function levelling_treatment(list_features){
                                 station_coordinate = element['geometry']['coordinates'];
                                 visee = false;
                                 distance = 0;
-                                console.log('distance remise à zéro');
                             }
                         }
                     }
@@ -81,9 +75,7 @@ function levelling_treatment(list_features){
                     }
                 })
             });
-
             cheminement[feature_id] = array_sta_vis
-
             levelling_create_row(feature_id, array_sta_vis.length+1);
         }
     });

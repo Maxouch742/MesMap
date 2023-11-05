@@ -5,11 +5,13 @@ levelling_source = new ol.source.Vector({
 levelling_layer = new ol.layer.Vector({
     title: 'Nivellement',
     source: levelling_source,
-    style: {
-        'stroke-color': '#000000',
-        'stroke-width': 2,
-        'stroke-lineDash': [10, 10],
-    }
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: '#000000',  //couleur: noire
+            width: 2,
+            lineDash: [10,10],
+        })
+    })
 });
 map.addLayer(levelling_layer);
 

@@ -14,9 +14,17 @@ function levelling_create(){
         levelling_draw = new ol.interaction.Draw({
             source: levelling_source,
             type: 'LineString',
+            style: new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: '#ff0000',
+                    width: 3
+                })
+            })
         });
         map.addInteraction(levelling_draw);
-        levelling_snap = new ol.interaction.Snap({ source: levelling_source });
+        levelling_snap = new ol.interaction.Snap({ 
+            source: levelling_source 
+        });
         map.addInteraction(levelling_snap);
 
     }
