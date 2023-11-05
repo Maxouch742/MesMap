@@ -1,6 +1,4 @@
-function levelling_create_row(id_chem, nbre_points) {
-
-    console.log(id_chem);
+function levelling_create_row(id_chem, nbre_points, distance_totale) {
     
     const tbody = document.getElementById('levelling_tbody');
     
@@ -17,7 +15,7 @@ function levelling_create_row(id_chem, nbre_points) {
     td1.innerText = nbre_points;
 
     const td2 = document.createElement('td');
-    td2.innerText = '0.2'
+    td2.innerText = distance_totale.toFixed(2);
     
     const td3 = document.createElement('td');
     const buttonModify = document.createElement('button');
@@ -28,21 +26,19 @@ function levelling_create_row(id_chem, nbre_points) {
     buttonModify.appendChild(iconModify);
     td3.appendChild(buttonModify);
 
-    const td4 = document.createElement('td');
     const buttonDelete = document.createElement('button');
     buttonDelete.setAttribute('class', 'btn');
     buttonDelete.setAttribute('onclick', `levelling_delete(${id_chem})`);
     const iconDelete = document.createElement('i');
     iconDelete.setAttribute('class', 'bi bi-trash3');
     buttonDelete.appendChild(iconDelete);
-    td4.appendChild(buttonDelete);
+    td3.appendChild(buttonDelete);
 
     // Ajout des cellules dans la ligne
     tr.appendChild(th);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
-    tr.appendChild(td4);
 
     // Ajout de la ligne dans le tableau
     tbody.appendChild(tr);

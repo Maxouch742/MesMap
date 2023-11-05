@@ -76,7 +76,11 @@ function levelling_treatment(list_features){
                 })
             });
             cheminement[feature_id] = array_sta_vis
-            levelling_create_row(feature_id, array_sta_vis.length+1);
+            let distance_totale = 0;
+            for (let i=0; i<array_sta_vis.length; i++){
+                distance_totale += array_sta_vis[i]['distance']
+            };
+            levelling_create_row(feature_id, array_sta_vis.length+1, distance_totale);
         }
     });
 }
