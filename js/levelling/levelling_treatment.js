@@ -20,15 +20,20 @@ function levelling_treatment(list_features){
             let visee = false;
             let distance = 0.0;
 
-            // Parcours des coordonnées
+            // Parcours des coordonnées du cheminement
             feature_coord.forEach( function(coordinate){
 
-                // Récupérer le matricule si c'est un point cliqué
+                let point_in_koo = false;
+
+                // Parcours des points importés pour connaître le matricule
                 points_global["features"].forEach( function(element){
 
                     // Si le point cliqué est présent le fichier KOO
                     if (coordinate[0] === element['geometry']['coordinates'][0] &&
                         coordinate[1] === element['geometry']['coordinates'][1]){
+
+                        // Le point est present dans le koo
+                        point_in_koo = true;
                         
                         // Si aucune station n'est enregistre, notre point devient une station
                         if (station === false){ 
@@ -61,19 +66,17 @@ function levelling_treatment(list_features){
                             }
                         }
                     }
-                    // Si le point cliqué n'est pas le fichier KOO
-                    else {
-
-                        // On vérifie que les coordonnées existe
-                        if (station_coordinate !== false && visee !== false && station !== false){
-                            // On met juste à jour la distance
-                            const dE = station_coordinate[0] - element['geometry']['coordinates'][0];
-                            const dN = station_coordinate[1] - element['geometry']['coordinates'][1];
-                            distance += Math.sqrt( dE*dE + dN*dN );
-                            station_coordinate = element['geometry']['coordinates'];
-                        }
-                    }
                 })
+
+                // Si le point n'est pas présent dans les points importés ou enregistrés
+                if (point_in_koo === false){
+                    // On considère donc que c'est un point intermédiaire
+                    const dE = station_coordinate[0] - coordinate[0];
+                    const dN = station_coordinate[1] - coordinate[1];
+                    distance += Math.sqrt( dE*dE + dN*dN );
+                    station_coordinate = coordinate;
+                }
+
             });
             cheminement[feature_id] = array_sta_vis
             let distance_totale = 0;
