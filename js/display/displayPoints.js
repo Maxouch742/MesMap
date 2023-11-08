@@ -1,5 +1,7 @@
 /**
  * Afficher les points importés et où cliqués dans la map
+ * Permet aussi de restreindre la map au point
+ * 
  */
 
 function displayPoints(){
@@ -7,6 +9,9 @@ function displayPoints(){
     // Définition du layer
     points_layer = new ol.layer.Vector({});
     points_source = new ol.source.Vector({});
+
+    // Liste des points
+    points_list = [];
 
     // Définition des variables pour traiter les points selon leur type
     let points_type_couleur = {};
@@ -45,6 +50,9 @@ function displayPoints(){
             name: point['properties']['id'],
             properties: point['properties'],
         });
+
+        // Ajout des coordonnées à la lsite des points
+        points_list.push(point['geometry']['coordinates']);
 
         // Ajout du feature dans la source du levelling
         const point_feature_levelling = point_feature
@@ -88,4 +96,9 @@ function displayPoints(){
     map.addLayer(points_layer);
     displayLayers('points');
     displayPointsLegend(points_type_couleur);
+
+    // Restreindre la map aux coordonnées
+    extentProject = ol.extent.boundingExtent(points_list);
+    bufferProject = ol.extent.buffer(extentProject, 75);
+    view.fit(bufferProject);
 }
