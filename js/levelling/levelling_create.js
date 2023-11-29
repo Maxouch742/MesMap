@@ -6,6 +6,8 @@ function levelling_create(){
     // L'utilisateur souhaite ajouter un cheminement
     if (levelling_create_button === true){
 
+        //TODO: vérifier si des points sont déjà présents sur la map
+
         // changer l'intitulé du bouton
         document.getElementById('html_levellingCreate').innerText = 'Fin de l\'ajout';
         levelling_create_button = false;

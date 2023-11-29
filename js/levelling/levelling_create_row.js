@@ -20,6 +20,8 @@ function levelling_create_row(id_chem, nbre_points, distance_totale) {
     const td3 = document.createElement('td');
     const buttonModify = document.createElement('button');
     buttonModify.setAttribute('class', 'btn');
+    buttonModify.setAttribute('data-toggle', 'modal');
+    buttonModify.setAttribute('data-target', 'modal');
     buttonModify.setAttribute('onclick', `levelling_modify(${id_chem})`);
     const iconModify = document.createElement('i');
     iconModify.setAttribute('class', 'bi bi-gear');
