@@ -16,7 +16,7 @@ function displayPointsLegend(object_correspondance){
         Object.entries(object_correspondance).forEach(entry => {
             const [key, value] = entry;
             const div = document.createElement('div');
-            div.innerHTML = `<input class="form-check-input" type="checkbox" id="checkBoxPoints" checked>
+            div.innerHTML = `<input class="form-check-input" type="checkbox" id="checkBoxPoints" name="${key}" value="${type_color[value]}" onchange="displayPointsType(this)" checked>
                              <label for="checkBoxPoints">
                              <i class='bi bi-circle-fill' style='color:${type_color[value]}'></i>
                              ${key}
