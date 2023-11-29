@@ -104,19 +104,24 @@
                                             </tr>
                                         </thead>
                                         <tbody id="levelling_tbody">
-                                            <!-- <tr id="Chem01">
+                                            <!-- 
+                                            <tr id="Chem01">
                                                 <th scope="row">Chem01</th>
                                                 <td>5</td>
-                                                <td>0.2</td>
+                                                <td>1400.0</td>
                                                 <td>
-                                                    <button class="btn" onclick="">
+                                                    <!-- <button class="btn" onclick="">
+                                                        <i class="bi bi-gear"></i>
+                                                    </button> 
+                                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                         <i class="bi bi-gear"></i>
                                                     </button>
                                                     <button class="btn" onclick="">
                                                         <i class="bi bi-trash3"></i>
                                                     </button>
                                                 </td>
-                                            </tr> -->
+                                            </tr>
+                                            --> 
                                         </tbody>
                                     </table>
                                     
@@ -144,6 +149,62 @@
 
         </div>
         <!-- ./ fin "container-fluid" -->
+
+        <!-- Modale -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cheminement : <span style='font-weight: bold ;'>XXX</span></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row border-bottom mb-2">
+
+                            <div class="col-6">
+                                Précision <span style="font-weight:bold;">en mm</span> (pour 1km):
+                            </div>
+                            <div class="col-6">
+                                <input type="number" name="number" step="any" value="0.2"/>
+                            </div>
+
+                        </div>
+                        <div class="row m-2">
+                            <h4>Points mesurés :</h4>
+                            <table class="table table-striped" id="">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Altitude</th>
+                                        <th>Dis [m]</th>
+                                        <th></th> <!-- Colonne pour ajouter la suppression du point -->
+                                    </tr>
+                                </thead>
+                                <tbody id="">
+                                    <tr id="">
+                                        <th scope="row">01</th>
+                                        <td>500.0</td>
+                                        <td></td>
+                                        <td><button class="btn" onclick=""><i class="bi bi-trash3"></i></button></td>
+                                    </tr> 
+                                    <tr id="">
+                                        <th scope="row">02</th>
+                                        <td>534.0</td>
+                                        <td>100.03</td>
+                                        <td><button class="btn" onclick=""><i class="bi bi-trash3"></i></button></td>
+                                    </tr> 
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Sauvegarder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

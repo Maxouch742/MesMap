@@ -57,7 +57,7 @@ function levelling_treatment(list_features){
                                 visee = element['properties']['id'];
 
                                 // ajoute le cheminement au list
-                                array_sta_vis.push({ 'station':station, 'visee':visee, 'distance':distance });
+                                array_sta_vis.push({ 'station':station, 'visee':visee, 'distance':distance, 'sigma':0.2 });
 
                                 station = visee;
                                 station_coordinate = element['geometry']['coordinates'];

@@ -1,7 +1,12 @@
 function MES_export(){
 
+    // Date
+    const date = new Date();
+    let currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    let currentHour = `${date.getHours()}h${date.getMinutes()}min${date.getSeconds()}`;
+
     // Création du contenu du fichier
-    let text = "$$ME Preanalyse \n"; //TODO: ajouter la date et l'heure de création du fichier
+    let text = `$$ME Preanalyse -- Exporté le ${currentDate} à ${currentHour}\n`;
 
     //--- Nivellement
     text += "******* NIVELLEMENT\n"
@@ -24,7 +29,7 @@ function MES_export(){
                 }
             }
 
-            const sigma = denivelee['distance']/1000.0 * 0.2;
+            const sigma = denivelee['distance']/1000.0 * denivelee['sigma'];
 
             text += `ST${denivelee['station']}\n`;
             text += `DH${visee}                  0.0000 ${sigma.toFixed(2)}\n`; 
@@ -34,7 +39,7 @@ function MES_export(){
 
 
     // Générer le fichier
-    let filename = "preanalyse.mes";
+    let filename = `preanalyse_${currentDate}_${currentHour}.mes`;
     let blob = new Blob([text], {type:'text/plain'});
     let link = document.createElement("a");
     link.download = filename;
