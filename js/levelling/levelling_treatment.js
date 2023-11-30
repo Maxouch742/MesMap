@@ -86,4 +86,5 @@ function levelling_treatment(list_features){
             levelling_create_row(feature_id, array_sta_vis.length+1, distance_totale);
         }
     });
+    console.log(cheminement);
 }

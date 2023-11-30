@@ -48,7 +48,7 @@ function levelling_create(){
                 // Vérifier la non-présence de l'id pour ajouter un id
                 if (feature.getId() === undefined){
                     feature.setId("Chem"+String(levelling_id));
-                    levelling_id ++;
+                    levelling_id++;
                 };
 
                 // On ajoute les features dans la liste

@@ -15,7 +15,7 @@ gnss_layer = new ol.layer.Vector({
                 width: 2,
             }),
             points: 4,
-            radius: 20,
+            radius: 15,
             angle: Math.PI / 4,
         }),
     })
