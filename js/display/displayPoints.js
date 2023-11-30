@@ -58,6 +58,10 @@ function displayPoints(){
         const point_feature_levelling = point_feature
         levelling_source.addFeature(point_feature_levelling);
 
+        // Ajout du feature dans la source du gnss
+        const point_feature_gnss = point_feature
+        gnss_source.addFeature(point_feature_gnss);
+
         // Ajout du feature dans la source des points
         point_feature.setStyle( new ol.style.Style({
             text: new ol.style.Text({

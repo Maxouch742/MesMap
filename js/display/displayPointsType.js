@@ -11,14 +11,7 @@ function displayPointsType(item){
         // Parcourir la liste des points
         points_layer.getSource().getFeatures().forEach(function (feature){
             if (type === feature.getProperties().properties.date){
-                feature.setStyle( new ol.style.Style({
-                    image: new ol.style.Circle({
-                        radius: 0,
-                        fill: new ol.style.Fill({
-                            color: 'white',
-                        })
-                    })
-                }))
+                feature.setStyle( undefined );
             }
         })
     }
