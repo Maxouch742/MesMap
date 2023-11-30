@@ -1,6 +1,5 @@
 function displayPointsLegend(object_correspondance){
 
-    console.log(object_correspondance);
     const object_correspondance_len = Object.keys(object_correspondance).length;
     
     // S'il y a plus d'un type dans le dictionnaire

@@ -55,15 +55,13 @@ function gnss_create(){
         gnss_source.forEachFeature( function(feature){
 
             if (feature.getGeometry().getType() === 'MultiPoint'){
-
                 if (feature.getId() === undefined){
                     feature.setId("Session"+String(gnss_id));
-                    gnss_id++;
+                    list_features_gnss.push(feature);
                 };
-
-                list_features_gnss.push(feature);
             }
         });
-        gnss_treatment(list_features_gnss, gnss_id-1);
+        gnss_treatment(list_features_gnss, gnss_id);
+        gnss_id++;
     }
 }

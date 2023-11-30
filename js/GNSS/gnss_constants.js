@@ -7,15 +7,12 @@ gnss_layer = new ol.layer.Vector({
     source: gnss_source,
     style: new ol.style.Style({
         image: new ol.style.RegularShape({
-            /*fill: new ol.style.Fill({ 
-                color: 'red'
-            }),*/
             stroke: new ol.style.Stroke({ 
-                color: 'orange',
+                color: 'black',
                 width: 2,
             }),
             points: 4,
-            radius: 15,
+            radius: 20,
             angle: Math.PI / 4,
         }),
     })

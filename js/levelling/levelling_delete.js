@@ -9,7 +9,6 @@ function levelling_delete(row_html){
     });
 
     // Supprimer la ligne du tableau
-    console.log(document.getElementById('levelling_tbody'));
     list_row = document.getElementById('levelling_tbody').rows;
     for (let i=0; i<list_row.length; i++){
         const rowCheminement = list_row[i];

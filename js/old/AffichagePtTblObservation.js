@@ -86,7 +86,6 @@ function afficheTblObs(dico_mes, valeur, methode_type){
 
     // Rentre dans condition si il y a qqch dans visee    
     if (dico_mes[methode_type]['features'][i]['properties']['visee'] !== ''){
-        console.log('il y a qqch dans visee');
         for (let k = 0; k < dico_mes[methode_type]['features'][i]['properties']['visee']['features'].length; k++){
             addligneObs(k, methode_type);
 
@@ -112,12 +111,10 @@ function afficheTblObs(dico_mes, valeur, methode_type){
             if (methode_type === 'terrestre' | methode_type === 'gnss'){
                 check = dico_mes[methode_type]['features'][i]['properties']['visee']['features'][k]['properties'][champ_0]
                 if (check === 0){
-                    typ0.checked = true; 
-                    console.log(0);
+                    typ0.checked = true;
                     }
                 else{
                     typ0.checked = false; 
-                    console.log(1);
                     };
 
                 check = dico_mes[methode_type]['features'][i]['properties']['visee']['features'][k]['properties'][champ_1];
