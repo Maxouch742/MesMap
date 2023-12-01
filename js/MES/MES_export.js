@@ -9,32 +9,74 @@ function MES_export(){
     let text = `$$ME Preanalyse -- Exporté le ${currentDate} à ${currentHour}\n`;
 
     //--- Nivellement
-    text += "******* NIVELLEMENT\n"
     console.log(cheminement);
-    for (const [key, value] of Object.entries(cheminement)){
-        // Ligne de commentaire avec le nom du cheminement 
-        text += `*** ${key}\n`;
-        
-        // Ajout des dénivelées
-        for (let i=0; i<value.length; i++){
-            const denivelee = value[i];
+    if (cheminement != {}){
+        text += "**------- NIVELLEMENT -------**\n"
+        for (const [key, value] of Object.entries(cheminement)){
+            // Ligne de commentaire avec le nom du cheminement 
+            text += `*** ${key}\n`;
+            
+            // Ajout des dénivelées
+            for (let i=0; i<value.length; i++){
+                const denivelee = value[i];
 
-            let visee = denivelee['visee']
-            if (visee.length > 10){
-                visee = visee.substring(0, 10);
+                let visee = denivelee['visee']
+                if (visee.length > 10){
+                    visee = visee.substring(0, 10);
+                }
+                else if (visee.length < 10){
+                    for (let j=visee.length; j<11; j++){
+                        visee += ' ';
+                    }
+                }
+
+                const sigma = denivelee['distance']/1000.0 * denivelee['sigma'];
+
+                text += `ST${denivelee['station']}\n`;
+                text += `DH${visee}                  0.0000 ${sigma.toFixed(2)}\n`; 
             }
-            else if (visee.length < 10){
-                for (let j=visee.length; j<11; j++){
-                    visee += ' ';
+        }
+    }
+
+    //---- GNSS
+    if (gnss_cheminement != {}){
+        text += "**------- GNSS -------**\n"
+        for (const [key, value] of Object.entries(gnss_cheminement)){
+            // Ligne de commentaire avec le nom de la session
+            let id = key;
+            
+            text += `*** ${key}\n`;
+            // Création du nom de la session
+            if (id.length > 10){
+                id = id.substring(0, 10);
+            } else if (id.length < 10){
+                for (let i=id.length; i<11; i++){
+                    id += ' ';
                 }
             }
+            text += `SL${id}         ${value['parameter']}\n`;
+            
+            // Ajout des observations
+            for (let i=0; i<value['observation'].length; i++){
+                const point = value['observation'][i];
+                let point_id = point['point'];
 
-            const sigma = denivelee['distance']/1000.0 * denivelee['sigma'];
+                // Création du nom de point pour l'identifiant
+                if (point_id.length > 10){
+                    point_id = point_id.substring(0, 10);
+                } else if (point_id.length < 10){
+                    for (let i=point_id.length; i<11; i++){
+                        point_id += ' ';
+                    }
+                }
 
-            text += `ST${denivelee['station']}\n`;
-            text += `DH${visee}                  0.0000 ${sigma.toFixed(2)}\n`; 
+                // Ajout des observations
+                text += `LY${point_id}      ${point['LY']}${point['sigma_Y']}\n`;
+                text += `LX${point_id}      ${point['LY']}${point['sigma_X']}\n`;
+                text += `LH${point_id}      ${point['LH']}${point['sigma_H']}\n`;
+   
+            }
         }
-
     }
 
 

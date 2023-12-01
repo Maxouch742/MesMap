@@ -44,7 +44,7 @@ function gnss_create(){
     }
     else {
         //---- changer l'intitulé du bouton
-        document.getElementById('html_GNSSCreate').innerText = 'Ajouter un cheminement';
+        document.getElementById('html_GNSSCreate').innerText = 'Ajouter une session';
         gnss_create_button = true;
 
         //---- supprimer le bouton supplémentaire
