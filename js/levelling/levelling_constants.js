@@ -19,7 +19,7 @@ map.addLayer(levelling_layer);
 levelling_create_button = true;
 let levelling_draw, levelling_snap;
 levelling_id = 1;
-cheminement = {}
+levelling_cheminement = {}
 
 /*
 // Permet de modifier les choses existantes dans le layer

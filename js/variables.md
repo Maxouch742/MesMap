@@ -4,7 +4,7 @@
 - utilisé pour lister les **cheminements de nivellement** enregistrés et validés par l'utilisateur
 - Forme : 
   ```json
-  cheminement = 
+  levelling_cheminement = 
   {
     "Chem1":
     [

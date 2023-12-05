@@ -78,7 +78,7 @@ function levelling_treatment(list_features){
                 }
 
             });
-            cheminement[feature_id] = array_sta_vis
+            levelling_cheminement[feature_id] = array_sta_vis
             let distance_totale = 0;
             for (let i=0; i<array_sta_vis.length; i++){
                 distance_totale += array_sta_vis[i]['distance']

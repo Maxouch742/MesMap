@@ -9,30 +9,22 @@ function MES_export(){
     let text = `$$ME Preanalyse -- Exporté le ${currentDate} à ${currentHour}\n`;
 
     //--- Nivellement
-    console.log(cheminement);
-    if (cheminement != {}){
-        text += "**------- NIVELLEMENT -------**\n"
-        for (const [key, value] of Object.entries(cheminement)){
+    console.log(levelling_cheminement);
+    if (levelling_cheminement != {}){
+        text += "**------- NIVELLEMENT -------\n"
+        for (const [key, value] of Object.entries(levelling_cheminement)){
             // Ligne de commentaire avec le nom du cheminement 
-            text += `*** ${key}\n`;
+            text += `**---- ${key}\n`;
             
             // Ajout des dénivelées
             for (let i=0; i<value.length; i++){
                 const denivelee = value[i];
 
-                let visee = denivelee['visee']
-                if (visee.length > 10){
-                    visee = visee.substring(0, 10);
-                }
-                else if (visee.length < 10){
-                    for (let j=visee.length; j<11; j++){
-                        visee += ' ';
-                    }
-                }
-
+                const station = createString_right(denivelee['station']);
+                const visee = createString_right(denivelee['visee'], 10);
                 const sigma = denivelee['distance']/1000.0 * denivelee['sigma'];
 
-                text += `ST${denivelee['station']}\n`;
+                text += `ST${station}\n`;
                 text += `DH${visee}                  0.0000 ${sigma.toFixed(2)}\n`; 
             }
         }
@@ -40,40 +32,33 @@ function MES_export(){
 
     //---- GNSS
     if (gnss_cheminement != {}){
-        text += "**------- GNSS -------**\n"
+        text += "**------- GNSS -------\n"
         for (const [key, value] of Object.entries(gnss_cheminement)){
             // Ligne de commentaire avec le nom de la session
-            let id = key;
-            
             text += `*** ${key}\n`;
+
             // Création du nom de la session
-            if (id.length > 10){
-                id = id.substring(0, 10);
-            } else if (id.length < 10){
-                for (let i=id.length; i<11; i++){
-                    id += ' ';
-                }
-            }
-            text += `SL${id}         ${value['parameter']}\n`;
+            const id = createString_right(key, 10);
+            text += `SL${id}                              ${value['parameter']}\n`;
             
             // Ajout des observations
             for (let i=0; i<value['observation'].length; i++){
                 const point = value['observation'][i];
-                let point_id = point['point'];
+                const point_id = createString_right(point['point'], 10);
+                const point_y = createNumber_left(point['LY'], 12);
+                const point_y_sigma = createNumber_left(point['sigma_Y'], 5, 2);
+                const point_x = createNumber_left(point['LX'], 12);
+                const point_x_sigma = createNumber_left(point['sigma_X'], 5, 2);
+                const point_h = createNumber_left(point['LH'], 12);
+                const point_h_sigma = createNumber_left(point['sigma_H'], 5, 2);
 
-                // Création du nom de point pour l'identifiant
-                if (point_id.length > 10){
-                    point_id = point_id.substring(0, 10);
-                } else if (point_id.length < 10){
-                    for (let i=point_id.length; i<11; i++){
-                        point_id += ' ';
-                    }
-                }
+                console.log(point_east);
+                
 
                 // Ajout des observations
-                text += `LY${point_id}      ${point['LY']}${point['sigma_Y']}\n`;
-                text += `LX${point_id}      ${point['LY']}${point['sigma_X']}\n`;
-                text += `LH${point_id}      ${point['LH']}${point['sigma_H']}\n`;
+                text += `LY${point_id}      ${point_y}${point_y_sigma}\n`;
+                text += `LX${point_id}      ${point_x}${point_x_sigma}\n`;
+                text += `LH${point_id}      ${point_h}${point_h_sigma}\n`;
    
             }
         }
