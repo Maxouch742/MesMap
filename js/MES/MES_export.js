@@ -9,8 +9,8 @@ function MES_export(){
     let text = `$$ME Preanalyse -- Exporté le ${currentDate} à ${currentHour}\n`;
 
     //--- Nivellement
-    console.log(levelling_cheminement);
-    if (levelling_cheminement != {}){
+    console.log('levelling_cheminement', levelling_cheminement);
+    if (Object.keys(levelling_cheminement).length != 0){
         text += "**------- NIVELLEMENT -------\n"
         for (const [key, value] of Object.entries(levelling_cheminement)){
             // Ligne de commentaire avec le nom du cheminement 
@@ -31,7 +31,7 @@ function MES_export(){
     }
 
     //---- GNSS
-    if (gnss_cheminement != {}){
+    if (Object.keys(gnss_cheminement).length != 0){
         text += "**------- GNSS -------\n"
         for (const [key, value] of Object.entries(gnss_cheminement)){
             // Ligne de commentaire avec le nom de la session
@@ -39,26 +39,25 @@ function MES_export(){
 
             // Création du nom de la session
             const id = createString_right(key, 10);
-            text += `SL${id}                              ${value['parameter']}\n`;
+            text += `SL${id}                             ${value['parameter']}\n`;
             
             // Ajout des observations
             for (let i=0; i<value['observation'].length; i++){
                 const point = value['observation'][i];
                 const point_id = createString_right(point['point'], 10);
-                const point_y = createNumber_left(point['LY'], 12);
-                const point_y_sigma = createNumber_left(point['sigma_Y'], 5, 2);
-                const point_x = createNumber_left(point['LX'], 12);
-                const point_x_sigma = createNumber_left(point['sigma_X'], 5, 2);
-                const point_h = createNumber_left(point['LH'], 12);
-                const point_h_sigma = createNumber_left(point['sigma_H'], 5, 2);
-
-                console.log(point_east);
                 
+                //TODO
+                //const point_y = createNumber_left(point['LY'], 12);
+                //const point_x = createNumber_left(point['LX'], 12);
+                //const point_h = createNumber_left(point['LH'], 12);
+                //const point_y_sigma = createNumber_left(point['sigma_Y'], 5, 2);
+                //const point_x_sigma = createNumber_left(point['sigma_X'], 5, 2);
+                //const point_h_sigma = createNumber_left(point['sigma_H'], 5, 2);
 
                 // Ajout des observations
-                text += `LY${point_id}      ${point_y}${point_y_sigma}\n`;
-                text += `LX${point_id}      ${point_x}${point_x_sigma}\n`;
-                text += `LH${point_id}      ${point_h}${point_h_sigma}\n`;
+                text += `LY${point_id}                  0.0000 ${point['sigma_Y'].toFixed(2)}\n`; 
+                text += `LX${point_id}                  0.0000 ${point['sigma_X'].toFixed(2)}\n`;  
+                text += `LH${point_id}                  0.0000 ${point['sigma_H'].toFixed(2)}\n`; 
    
             }
         }
