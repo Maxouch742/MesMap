@@ -7,7 +7,7 @@ function levelling_treatment(list_features){
         const feature_id = feature.getId();
 
         // on vérifie si le cheminement n'est pas déjà enregistré
-        if (!(feature_id in cheminement)){
+        if (!(feature_id in levelling_cheminement)){
 
             const feature_coord = feature.getGeometry().getCoordinates();
 

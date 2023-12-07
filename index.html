@@ -17,6 +17,7 @@
         
         <!-- Personnel -->
         <link rel="stylesheet" href="./css/style.css" type="text/css">
+        <link rel="stylesheet" href="./css/levelling.css" type="text/css">
     </head>
 
     <body>
@@ -29,12 +30,12 @@
 
                     <!-- Titre (TODO: Logo) -->
                     <div class="text-center">
-                        <h1>MesMap</h1>
+                        <img src="./img/MesMap.png" alt="Logo de MesMap" width="30%">
                     </div>
 
                     <!-- Importer les fichiers -->
                     <div class="border">
-                        <h3>Import des fichiers</h3>
+                        <h3>Gestion des fichiers</h3>
                         <!-- Ligne pour fichier KOO -->
                         <div class="row">
                             <div class="col-2">
@@ -104,7 +105,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="levelling_tbody">
-                                            <!-- 
+                                            <!--
                                             <tr id="Chem01">
                                                 <th scope="row">Chem01</th>
                                                 <td>5</td>
@@ -112,16 +113,15 @@
                                                 <td>
                                                     <!-- <button class="btn" onclick="">
                                                         <i class="bi bi-gear"></i>
-                                                    </button> 
-                                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    </button>
+                                                    <button type="button" class="btn" onclick="levelling_displayModal('Chem01')"> <!--data-bs-toggle="modal" data-bs-target="#modalCheminement"
                                                         <i class="bi bi-gear"></i>
                                                     </button>
                                                     <button class="btn" onclick="">
                                                         <i class="bi bi-trash3"></i>
                                                     </button>
                                                 </td>
-                                            </tr>
-                                            --> 
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                     
@@ -132,7 +132,8 @@
                             </div>
                         </div>
                         <!-- ./ fin Observations nivellement -->
-
+                        
+                        
                         <!-- Observations GNSS -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -206,33 +207,37 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cheminement : <span style='font-weight: bold ;'>XXX</span></h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cheminement : <span id="levellingModal_ChemID" style='font-weight: bold ;'>XXX</span></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <!--
                         <div class="row border-bottom mb-2">
 
                             <div class="col-6">
-                                Précision <span style="font-weight:bold;">en mm</span> (pour 1km):
+                                <h4>Précision <span style="font-weight:bold;">en mm</span> (pour 1km):</h4>h4>
                             </div>
                             <div class="col-6">
-                                <input type="number" name="number" step="any" value="0.2"/>
+                                <input type="number" name="number" step="any" value="0.2" id="levellingModal_PrecisionInput"/>
                             </div>
 
                         </div>
+                        -->
                         <div class="row m-2">
-                            <h4>Points mesurés :</h4>
-                            <table class="table table-striped" id="">
+                            <!--<h4>Points mesurés :</h4>-->
+                            <table class="table table-striped" id="levellingModal_tablePoints">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Altitude</th>
+                                        <th>Station</th>
+                                        <th>Visée</th>
                                         <th>Dis [m]</th>
+                                        <th>&#963; [mm/km]</th>
+                                        <th>&#963; final [m/km]</th>
                                         <th></th> <!-- Colonne pour ajouter la suppression du point -->
                                     </tr>
                                 </thead>
-                                <tbody id="">
-                                    <tr id="">
+                                <tbody id="levellingModal_tablePoints_tbody">
+                                    <!-- <tr id="">
                                         <th scope="row">01</th>
                                         <td>500.0</td>
                                         <td></td>
@@ -243,7 +248,8 @@
                                         <td>534.0</td>
                                         <td>100.03</td>
                                         <td><button class="btn" onclick=""><i class="bi bi-trash3"></i></button></td>
-                                    </tr> 
+                                    </tr> -->
+                                    <!-- TODO: ajouter dénivelée de hauteur -->
                                 </tbody>
                             </table>
 
@@ -303,5 +309,4 @@
         <script src="./js/MES/MES_export.js"></script>
 
     </body>
-
 </html>
