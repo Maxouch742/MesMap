@@ -35,7 +35,7 @@ function MES_export(){
         text += "**------- GNSS -------\n"
         for (const [key, value] of Object.entries(gnss_cheminement)){
             // Ligne de commentaire avec le nom de la session
-            text += `*** ${key}\n`;
+            text += `**---- ${key}\n`;
 
             // Création du nom de la session
             const id = createString_right(key, 10);

@@ -40,7 +40,7 @@ function levelling_modify(row_html){
         tr.appendChild(td_sigma_final);
 
         const td_button = document.createElement('td');
-        td_button.innerHTML = '<button class="btn" onclick=""><i class="bi bi-trash3"></i></button>';
+        td_button.innerHTML = '<button class="btn" onclick="levelling_delete_popup()"><i class="bi bi-trash3"></i></button>';
         tr.appendChild(td_button);
 
         tbody.appendChild(tr);
