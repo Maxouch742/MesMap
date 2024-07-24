@@ -21,6 +21,7 @@ function displayPoints(){
     for (let i=0; i<points_global['features'].length; i++){
         const point = points_global['features'][i];
         const point_type = point['properties']['date'];
+        console.log(point_type)
 
         // Si le type n'est pas présent dans l'objet "points_type_couleur"
         if (Object.keys(points_type_couleur).includes(point_type) === false){

@@ -132,8 +132,58 @@
                             </div>
                         </div>
                         <!-- ./ fin Observations nivellement -->
-                        
-                        
+
+                        <!-- Observations ST -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panel-obsTS" aria-expanded="false" aria-controls="panel-obsTS">
+                                    <h5>Station totale</h5>
+                                </button>
+                            </h2>
+
+                            <div class="accordion-collapse collapse" id="panel-obsTS">
+                                <div class="accordion-body">
+
+                                    <table class="table table-striped" id="ts_table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Pts</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ts_tbody">
+                                            <!--
+                                            <tr id="Session01">
+                                                <th scope="row">Session 1</th>
+                                                <td>5</td>
+                                                <td>
+                                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                        <i class="bi bi-gear"></i>
+                                                    </button>
+                                                    <button class="btn" onclick="">
+                                                        <i class="bi bi-trash3"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            -->
+                                        </tbody>
+                                    </table>
+                                    
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button id="html_TSCreate" onclick="ts_create()">Ajouter une station</button>
+                                        </div>
+                                        <div class="col-6" id="ts_buttonAddStation">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- ./ fin du "accordion-body"-->
+                            </div>
+                        </div>
+                        <!-- ./ fin Observations ST -->
+
                         <!-- Observations GNSS -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -291,6 +341,10 @@
         <script src="./js/levelling/levelling_create.js"></script>
         <script src="./js/levelling/levelling_treatment.js"></script>
         <script src="./js/levelling/levelling_create_row.js"></script>
+
+        <script src="./js/totalStation/ts_constants.js"></script>
+        <script src="./js/totalStation/ts_addStation.js"></script>
+        <script src="./js/totalStation/ts_create.js"></script>
 
         <script src="./js/GNSS/gnss_constants.js"></script>
         <script src="./js/GNSS/gnss_create.js"></script>
